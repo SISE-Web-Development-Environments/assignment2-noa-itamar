@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="./jquery-3.4.1.slim.min.js"></script>
-		<script type="text/javascript" src="./app.js"></script>
-	</head>
 
-	<body>
+<head>
+	<script src="./jquery-3.4.1.slim.min.js"></script>
+	<script type="text/javascript" src="./app.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+</head>
+
+<body>
+	<div id="WelcomePage">
+		<div id="start_buttons" >
+			<button class="Buttons" id="registerButton"> Register </button>
+			<button class="Buttons" id="loginButton"> Login </button>
+		</div>
+	</div>
+
+	<div id="PacmanGame">
 		<div id="score">
 			<label for="lblScore">SCORE:</label>
 			<input id="lblScore" type="text" />
@@ -17,5 +28,90 @@
 		<div id="game">
 			<canvas id="canvas" height="600" width="600"></canvas>
 		</div>
-	</body>
+	</div>
+
+
+	<form id="first_form" method="post" action="">
+		<h2>Registration </h2>
+		<div>
+		  <label for="userName">UserName : </label>
+		  <input type="text" id="userName" name="userName"></input>
+		</div>
+		<div>
+		  <label for="name">Full Name:</label>
+		  <input type="text" id="name" name="name"></input>
+		</div>
+		<div>
+		  <label for="email">Email:</label>
+		  <input type="email" id="email" name="email"></input>
+		</div>
+		<div>
+		  <label for="password">Password:</label>
+		  <input type="password" id="password" name="password"></input>
+		</div>
+
+	    <div>
+			<label for="password">Birth Date:</label>
+			<input type="date" id="form_birth_date" name="trip-start" required="">
+		</div>
+
+		<div>
+			<input type="submit" value="Submit" />
+		  </div>
+	  </form>
+	  
+	<script>
+		$(document).ready(function () {
+			$("#PacmanGame").hide();
+			$("#first_form").hide();
+		});
+
+		$("#registerButton").click(function(){
+				$("#first_form").show();
+				$("#goBack").css('visibility', 'visible');
+				$("#registerButton").hide();
+				$("#registerButton").hide();
+			});
+
+
+		$('#first_form').submit(function (e) {
+			e.preventDefault();
+			var user_name = $('#userName').val();
+			var password = $('#password').val();
+			var name = $('#name').val();
+			var email = $('#email').val();
+			$(".error").remove();
+
+			if (user_name.length < 1) {
+				$('#userName').after('<span class="error">This field is required</span>');
+			
+			}
+			if (name.length < 1) {
+				$('#name').after('<span class="error">This field is required</span>');
+			}
+			else{
+				var pattern = /^[a-zA-Z]*$/; //only letters regex.
+				if (!(pattern.test(name)) && name !== '') {
+					$('#name').after('<span class="error">Enter name without numbers</span>');
+				}
+
+			}
+			if (email.length < 1) {
+				$('#email').after('<span class="error">This field is required</span>');
+			}
+			 else {
+				var regEx = /^[A-Z0-9][A-Z0-9._%+-]{0,63}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/;
+				var validEmail = regEx.test(email);
+				if (!validEmail) {
+					$('#email').after('<span class="error">Enter a valid email</span>');
+				}
+			}
+			if (password.length < 8) {
+				$('#password').after('<span class="error">Password must be at least 8 characters long</span>');
+			}
+		});	
+
+	</script>
+</body>
+
 </html>

@@ -1,0 +1,65 @@
+body
+{
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	background-image: url('pacman.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+#start_buttons{
+  text-align: center;
+  
+}
+
+#first_form{
+  font-family:helvetica;
+    font-size:16px;
+    font-weight:100;
+    color:#fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 800px;
+    background: black;
+    padding: 45px;
+    box-sizing: border-box;
+    border :1px solid rgba(0,0,0,.1);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.Buttons {
+     display:inline-table;
+    padding:16px 32px;
+    font-family:helvetica;
+    font-size:16px;
+    font-weight:100;
+    color:#fff;
+    background: #587286;
+    border:0;
+    font-weight:100;
+  }
+
+
+
+form label {
+  display: inline-block;
+  width: 100px;
+}
+
+form div {
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  margin-left: 5px;
+}
+
+label.error {
+  display: inline;
+}
+
+
