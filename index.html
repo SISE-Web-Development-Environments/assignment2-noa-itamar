@@ -13,6 +13,24 @@
 		<div id="start_buttons" >
 			<button class="Buttons" id="registerButton"> Register </button>
 			<button class="Buttons" id="loginButton"> Login </button>
+			<button class="Buttons" id="showB"> Start </button>
+		</div>
+		<br/>
+		<br/>
+		<div id="log-in" method="post" action="">
+			<div>
+				<label for="userName">User Name : </label>
+				<input type="text" id="userlog-in" name="userName"></input>
+			</div>
+			<div>
+				<label for="name">Password :</label>
+				<input type="text" id="passlog-in" name="name"></input>
+			</div>
+			<div>
+				<button class="Buttons" id="log-in-button" onclick="logingGame()" >log-in</button>
+
+			</div>
+
 		</div>
 	</div>
 
@@ -56,62 +74,107 @@
 		</div>
 
 		<div>
-			<input type="submit" value="Submit" />
+			<input id="reigstartionform" type="submit" value="Submit" onclick="" />
+			<button class="Buttons" id="goback" >Main Menu</button>
 		  </div>
 	  </form>
-	  
-	<script>
-		$(document).ready(function () {
-			$("#PacmanGame").hide();
-			$("#first_form").hide();
-		});
 
-		$("#registerButton").click(function(){
-				$("#first_form").show();
-				$("#goBack").css('visibility', 'visible');
-				$("#registerButton").hide();
-				$("#registerButton").hide();
-			});
+<script>
+	localStorage.setItem("p","p");
+	$(document).ready(function () {
+		$("#PacmanGame").hide();
+		$("#first_form").hide();
+		$("#log-in").hide();
+	});
+	$("#reigstartionform").click(function () {
+		$("#PacmanGame").hide();
+		$("#first_form").hide();
+		$("#log-in").hide();
+	});
+	$("#goback").click(function () {
+		$("#PacmanGame").hide();
+		$("#first_form").hide();
+		$("#log-in").hide();
+	});
+
+	$("#registerButton").click(function(){
+		$("#first_form").show();
+
+	});
+	$("#loginButton").click(function(){
+		$("#PacmanGame").hide();
+		$("#first_form").hide();
+		$("#log-in").show();
+
+	});
+	$("#showB").click(function(){
+		$("#PacmanGame").show();
+		$("#registerButton").hide();
+		$("#WelcomePage").hide();
+	});
 
 
-		$('#first_form').submit(function (e) {
-			e.preventDefault();
-			var user_name = $('#userName').val();
-			var password = $('#password').val();
-			var name = $('#name').val();
-			var email = $('#email').val();
-			$(".error").remove();
 
-			if (user_name.length < 1) {
-				$('#userName').after('<span class="error">This field is required</span>');
-			
-			}
-			if (name.length < 1) {
-				$('#name').after('<span class="error">This field is required</span>');
-			}
-			else{
-				var pattern = /^[a-zA-Z]*$/; //only letters regex.
-				if (!(pattern.test(name)) && name !== '') {
-					$('#name').after('<span class="error">Enter name without numbers</span>');
-				}
 
-			}
-			if (email.length < 1) {
-				$('#email').after('<span class="error">This field is required</span>');
-			}
-			 else {
-				var regEx = /^[A-Z0-9][A-Z0-9._%+-]{0,63}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/;
-				var validEmail = regEx.test(email);
-				if (!validEmail) {
-					$('#email').after('<span class="error">Enter a valid email</span>');
-				}
-			}
-			if (password.length < 8) {
-				$('#password').after('<span class="error">Password must be at least 8 characters long</span>');
-			}
-		});	
 
-	</script>
+	$('#first_form').submit(function (e) {
+		e.preventDefault();
+		var user_name = $('#userName').val();
+		var password = $('#password').val();
+		var name = $('#name').val();
+		var email = $('#email').val();
+		$(".error").remove();
+
+		if (user_name.length < 1) {
+			$('#userName').after('<span class="error">This field is required</span>');
+
+		}
+		if (name.length < 1) {
+			$('#name').after('<span class="error">This field is required</span>');
+		}
+		else{
+			var pattern = /^[a-zA-Z]*$/; //only letters regex.
+			if (!(pattern.test(name)) && name !== '') {
+				$('#name').after('<span class="error">Enter name without numbers</span>');
+			}
+
+		}
+		if (email.length < 1) {
+			$('#email').after('<span class="error">This field is required</span>');
+		}
+		else {
+			var regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+			var validEmail = regEx.test(email);
+			if (!validEmail) {
+				$('#email').after('<span class="error">Enter a valid email</span>');
+			}
+		}
+		if (password.length < 8) {
+			$('#password').after('<span class="error">Password must be at least 8 characters long</span>');
+		}
+
+		localStorage.setItem(user_name,password);
+		alert("Registered successfully")
+	});
+
+	function  logingGame(){
+
+		if (localStorage.getItem($('#userlog-in').val()) === null ) {
+			alert("Error Password or Username")
+			return false;
+		} else if (localStorage.getItem($('#userlog-in').val()) === $('#passlog-in').val()){
+			$("#PacmanGame").show();
+			$("#registerButton").hide();
+			$("#WelcomePage").hide();
+			return true;
+		}
+		else{
+			alert("Error Password or Username")
+			return false;
+		}
+	};
+
+</script>
 </body>
 
 </html>

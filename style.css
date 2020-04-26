@@ -3,14 +3,22 @@ body
 	margin: 0;
 	padding: 0;
 	font-family: sans-serif;
-	background-image: url('pacman.png');
-	background-repeat: no-repeat;
-	background-size: cover;
+
 }
 
 #start_buttons{
   text-align: center;
   
+}
+#WelcomePage{
+    background-image: url('pacman.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+#log-in{
+    text-align: center;
+    color: white;
 }
 
 #first_form{
@@ -28,6 +36,7 @@ body
     box-sizing: border-box;
     border :1px solid rgba(0,0,0,.1);
     box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    height: 100vh;
 }
 
 .Buttons {

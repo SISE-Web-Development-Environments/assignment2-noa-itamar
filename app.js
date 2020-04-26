@@ -6,6 +6,7 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var lastposition =4;
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -71,7 +72,9 @@ function Start() {
 	);
 	interval = setInterval(UpdatePosition, 250);
 }
+function paintwalls(){
 
+}
 function findRandomEmptyCell(board) {
 	var i = Math.floor(Math.random() * 9 + 1);
 	var j = Math.floor(Math.random() * 9 + 1);
@@ -97,7 +100,9 @@ function GetKeyPressed() {
 	}
 }
 
-function Draw() {
+function Draw(y) {
+	if(y != undefined)
+		lastposition=y
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
@@ -108,14 +113,25 @@ function Draw() {
 			center.y = j * 60 + 30;
 			if (board[i][j] == 2) {
 				context.beginPath();
-				context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+				if(lastposition==2)
+					context.arc(center.x, center.y, 30, 0.65 * Math.PI, 2.35 * Math.PI); // half circle
+				else if(lastposition==1)
+					context.arc(center.x, center.y, 30, -0.35 * Math.PI, 1.35 * Math.PI);
+				else if(lastposition==4)
+					context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI);
+				else if(lastposition==3)
+					context.arc(center.x, center.y, 30, -0.85 * Math.PI, 0.85 * Math.PI);
 				context.lineTo(center.x, center.y);
 				context.fillStyle = pac_color; //color
 				context.fill();
 				context.beginPath();
-				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+				if(lastposition==4 || lastposition ==3)
+					context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+				else if(lastposition ==2||lastposition==1)
+					context.arc(center.x + 12, center.y - 2, 5, 0, 2 * Math.PI);
 				context.fillStyle = "black"; //color
 				context.fill();
+
 			} else if (board[i][j] == 1) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
@@ -167,6 +183,8 @@ function UpdatePosition() {
 		window.clearInterval(interval);
 		window.alert("Game completed");
 	} else {
-		Draw();
+		Draw(x);
 	}
 }
+
+
