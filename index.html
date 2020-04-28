@@ -2,177 +2,148 @@
 <html>
 
 <head>
-	<script src="./jquery-3.4.1.slim.min.js"></script>
-	<script type="text/javascript" src="./app.js"></script>
-	<link rel="stylesheet" type="text/css" href="style.css" />
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="./jquery-3.4.1.slim.min.js"></script>
+    <script type="text/javascript" src="./app.js"></script>
+    <script type="text/javascript" src="./information.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+	<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+	<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+
 </head>
 
 <body>
-	<div id="WelcomePage">
-		<div id="start_buttons" >
-			<button class="Buttons" id="registerButton"> Register </button>
-			<button class="Buttons" id="loginButton"> Login </button>
-			<button class="Buttons" id="showB"> Start </button>
+<div class="custom-padding" style="-webkit-user-drag: auto" id="menu2">
+	<nav id="menu">
+		<ul class="menu-area">
+			<li><a href="#" data-option="WelcomePage" onclick="showNavOption(this)">Home</a></li>
+			<li><a href="#"  data-option="log-in" onclick="showNavOption(this)">log-in</a></li>
+			<li><a href="#" data-option="registerpage" onclick="showNavOption(this)">Register</a></li>
+		</ul>
+
+	</nav>
+
+</div>
+
+<div id="main">
+	<section id="WelcomePage" class="choosenScreen">
+		<div id="start_buttons">
+			<button class="Buttons" id="registerButton" onclick="moveTo('registerpage')"> Register</button>
+			<button class="Buttons" id="loginButton" onclick="moveTo('log-in')"> Login</button>
+			<button class="Buttons" id="showB" onclick="moveTo('PacmanGame')" > Start</button>
 		</div>
-		<br/>
-		<br/>
-		<div id="log-in" method="post" action="">
-			<div>
-				<label for="userName">User Name : </label>
-				<input type="text" id="userlog-in" name="userName"></input>
-			</div>
-			<div>
-				<label for="name">Password :</label>
-				<input type="text" id="passlog-in" name="name"></input>
-			</div>
-			<div>
-				<button class="Buttons" id="log-in-button" onclick="logingGame()" >log-in</button>
-
-			</div>
+	</section>
+	<section id="log-in" method="post" action="">
+		<div>
+			<label for="userName">User Name : </label>
+			<input type="text" id="userlog-in" name="userName"></input>
+		</div>
+		<div>
+			<label for="name">Password :</label>
+			<input type="password" id="passlog-in" name="name"></input>
+		</div>
+		<div>
+			<button class="Buttons" id="log-in-button" onclick="logingGame()">log-in</button>
 
 		</div>
-	</div>
 
-	<div id="PacmanGame">
+	</section>
+	<section id="gameSettings">
+		<form id="gameSettingsForm" method="post" action="">
+			<h1>Choose your keyboard layout</h1>
+			<div>
+				<label for="goup">Up :</label>
+				<input id="goup" name="goup" type="text" onkeydown="uniKeyCode(event)">
+				<label for="godown">Down :</label>
+				<input id="godown" name="godown" type="text" onkeydown="uniKeyCode(event)">
+				<label for="goleft">Left :</label>
+				<input id="goleft" name="goleft" type="text" onkeydown="uniKeyCode(event)">
+				<label for="goright">Right :</label>
+				<input id="goright" name="goright" type="text" onkeydown="uniKeyCode(event)">
+			</div>
+			<h1>Choose game rules</h1>
+			<label for="randomcheck">Use random rules and arrows to play</label>
+			<input type="checkbox" id="randomcheck"  onclick="checkboxrandomize()">
+			<div id="rulesdiv">
+				<div>
+					<label for="numofballs">How much food do you crave?(at least 50 no more then 90) :</label>
+					<input id="numofballs" name="numofballs" type="text">
+				</div>
+				<div>
+					<label for="smallcolor">Small food color( 5 points each):</label>
+					<input id="smallcolor" name="smallcolor" type="text">
+				</div>
+				<div>
+					<label for="mediumcolor">Medium food color( 15 points each):</label>
+					<input id="mediumcolor" name="mediumcolor" type="text">
+				</div>
+				<div>
+					<label for="bigcolor">Big food color( 25 points each):</label>
+					<input id="bigcolor" name="bigcolor" type="text">
+				</div>
+				<div>
+					<label for="gamtime">Game Time( at least 60 seconds):</label>
+					<input id="gamtime" name="gamtime" type="text">
+				</div>
+				<div>
+					<label for="monsercounter">How many Monsters( between 1 and 4):</label>
+					<input id="monsercounter" name="monsercounter" type="text">
+				</div>
+			</div>
+
+
+		</form>
+		<input id="startgame" type="submit" value="Play!" onclick="moveTo('PacmanGame')">
+	</section>
+
+
+	<section id="PacmanGame">
 		<div id="score">
 			<label for="lblScore">SCORE:</label>
-			<input id="lblScore" type="text" />
+			<input id="lblScore" type="text"/>
 		</div>
 		<div id="time">
 			<label for="lblTime">TIME:</label>
-			<input id="lblTime" type="text" />
+			<input id="lblTime" type="text"/>
 		</div>
 		<div id="game">
 			<canvas id="canvas" height="600" width="600"></canvas>
 		</div>
-	</div>
+	</section>
 
+	<section id="registerpage">
+		<form id="first_form" method="post" action="" onsubmit="submitRegistration()" role="form">
+			<h2>Registration </h2>
+			<div>
+				<label for="userName">UserName : </label>
+				<input type="text" id="userName" name="userName"></input>
+			</div>
+			<div>
+				<label for="name">Full Name:</label>
+				<input type="text" id="name" name="name"></input>
+			</div>
+			<div>
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email"></input>
+			</div>
+			<div>
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password"></input>
+			</div>
 
-	<form id="first_form" method="post" action="">
-		<h2>Registration </h2>
-		<div>
-		  <label for="userName">UserName : </label>
-		  <input type="text" id="userName" name="userName"></input>
-		</div>
-		<div>
-		  <label for="name">Full Name:</label>
-		  <input type="text" id="name" name="name"></input>
-		</div>
-		<div>
-		  <label for="email">Email:</label>
-		  <input type="email" id="email" name="email"></input>
-		</div>
-		<div>
-		  <label for="password">Password:</label>
-		  <input type="password" id="password" name="password"></input>
-		</div>
+			<div>
+				<label for="password">Birth Date:</label>
+				<input type="date" id="form_birth_date" name="trip-start" required="">
+			</div>
 
-	    <div>
-			<label for="password">Birth Date:</label>
-			<input type="date" id="form_birth_date" name="trip-start" required="">
-		</div>
-
-		<div>
-			<input id="reigstartionform" type="submit" value="Submit" onclick="" />
-			<button class="Buttons" id="goback" >Main Menu</button>
-		  </div>
-	  </form>
-
+			<div>
+				<input type="submit" value="submit" onclick=""/>
+				<button class="Buttons" id="goback">Main Menu</button>
+			</div>
+		</form>
+	</section>
+</div>
 <script>
-	localStorage.setItem("p","p");
-	$(document).ready(function () {
-		$("#PacmanGame").hide();
-		$("#first_form").hide();
-		$("#log-in").hide();
-	});
-	$("#reigstartionform").click(function () {
-		$("#PacmanGame").hide();
-		$("#first_form").hide();
-		$("#log-in").hide();
-	});
-	$("#goback").click(function () {
-		$("#PacmanGame").hide();
-		$("#first_form").hide();
-		$("#log-in").hide();
-	});
-
-	$("#registerButton").click(function(){
-		$("#first_form").show();
-
-	});
-	$("#loginButton").click(function(){
-		$("#PacmanGame").hide();
-		$("#first_form").hide();
-		$("#log-in").show();
-
-	});
-	$("#showB").click(function(){
-		$("#PacmanGame").show();
-		$("#registerButton").hide();
-		$("#WelcomePage").hide();
-	});
-
-
-
-
-
-	$('#first_form').submit(function (e) {
-		e.preventDefault();
-		var user_name = $('#userName').val();
-		var password = $('#password').val();
-		var name = $('#name').val();
-		var email = $('#email').val();
-		$(".error").remove();
-
-		if (user_name.length < 1) {
-			$('#userName').after('<span class="error">This field is required</span>');
-
-		}
-		if (name.length < 1) {
-			$('#name').after('<span class="error">This field is required</span>');
-		}
-		else{
-			var pattern = /^[a-zA-Z]*$/; //only letters regex.
-			if (!(pattern.test(name)) && name !== '') {
-				$('#name').after('<span class="error">Enter name without numbers</span>');
-			}
-
-		}
-		if (email.length < 1) {
-			$('#email').after('<span class="error">This field is required</span>');
-		}
-		else {
-			var regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-			var validEmail = regEx.test(email);
-			if (!validEmail) {
-				$('#email').after('<span class="error">Enter a valid email</span>');
-			}
-		}
-		if (password.length < 8) {
-			$('#password').after('<span class="error">Password must be at least 8 characters long</span>');
-		}
-
-		localStorage.setItem(user_name,password);
-		alert("Registered successfully")
-	});
-
-	function  logingGame(){
-
-		if (localStorage.getItem($('#userlog-in').val()) === null ) {
-			alert("Error Password or Username")
-			return false;
-		} else if (localStorage.getItem($('#userlog-in').val()) === $('#passlog-in').val()){
-			$("#PacmanGame").show();
-			$("#registerButton").hide();
-			$("#WelcomePage").hide();
-			return true;
-		}
-		else{
-			alert("Error Password or Username")
-			return false;
-		}
-	};
 
 </script>
 </body>

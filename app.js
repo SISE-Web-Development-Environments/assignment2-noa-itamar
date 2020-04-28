@@ -7,10 +7,15 @@ var start_time;
 var time_elapsed;
 var interval;
 var lastposition =4;
+var upkey;
+var downkey;
+var leftkey;
+var rightkey;
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
 	Start();
+
 });
 
 function Start() {
