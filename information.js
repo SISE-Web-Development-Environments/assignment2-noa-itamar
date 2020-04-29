@@ -95,8 +95,19 @@ function  logingGame(){
         return false;
     }
 }
-function uniKeyCode(event) {
+
+function uniKeyCode(event,chooseKey) {
     var key = event.keyCode;
+    if (chooseKey == 'up') {
+        upkey = key;
+    } else if (chooseKey == 'down') {
+        downkey = key;
+    } else if (chooseKey == 'left') {
+        leftkey = key;
+    }
+    else {
+        rightkey = key;
+    }
     return key;
 }
 
@@ -110,34 +121,58 @@ function checkboxrandomize() {
     }
 }
 function gameSettingsCheck(){
-    $('#gameSettingsForm').validate({
-        rules: {
-            numofballs: {
-                max: 90,
-                min: 50,
-                required: true
-            },
-            gamtime: {
-                min: 60,
-                required: true,
+    var checkBox = document.getElementById("randomcheck");
+    if (checkBox.checked == false) {
+        $('#gameSettingsForm').validate({
+            rules: {
+                numofballs: {
+                    max: 90,
+                    min: 50,
+                    required: true
+                },
+                gametime: {
+                    min: 60,
+                    required: true,
 
-            },
-            monsercounter: {
-                max: 4,
-                min: 1,
-                required: true
-            },
+                },
+                monsercounter: {
+                    max: 4,
+                    min: 1,
+                    required: true
+                },
+                smallcolor: {
 
-        },
-    });
+                    required: true
+                },
+                mediumcolor: {
 
-    event.preventDefault();
-    const form = $("#first_form");
-    if (form.valid()) {
-       upkey =  uniKeyCode()
-        var password = $('#password').val();
-        localStorage.setItem(user_name,password);
-        moveTo("WelcomePage");
+                    required: true
+                },
+                bigcolor: {
+
+                    required: true
+                },
+            },
+        });
     }
+    else{
+        upkey = 38;
+        downkey = 40;
+        leftkey = 37;
+        rightkey = 39;
 
+        numofballs = 50;
+        gametime = 80;
+        monsercounter = 1;
+        smallcolor = 'red';
+        mediumcolor = 'black';
+        bigcolor = 'blue';
+
+    }
+        event.preventDefault();
+        const form = $("#gameSettingsForm");
+        if (form.valid()) {
+            runGame();
+            moveTo("PacmanGame");
+        }
 }
