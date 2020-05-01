@@ -1,5 +1,4 @@
-
-localStorage.setItem("p","p");
+localStorage.setItem("p", "p");
 
 
 function showNavOption(identifier) {
@@ -44,7 +43,7 @@ function moveTo(destination) {
 
 }
 
-function submitRegistration(){
+function submitRegistration() {
     $('#first_form').validate({
         rules: {
             userName: {
@@ -67,7 +66,7 @@ function submitRegistration(){
             },
 
         },
-        message:"password must be greater then 8 "
+        message: "password must be greater then 8 "
     });
 
     event.preventDefault();
@@ -75,28 +74,27 @@ function submitRegistration(){
     if (form.valid()) {
         var user_name = $('#userName').val();
         var password = $('#password').val();
-        localStorage.setItem(user_name,password);
+        localStorage.setItem(user_name, password);
         moveTo("WelcomePage");
     }
 
 }
 
-function  logingGame(){
+function logingGame() {
 
-    if (localStorage.getItem($('#userlog-in').val()) === null ) {
+    if (localStorage.getItem($('#userlog-in').val()) === null) {
         alert("Error Password or Username")
         return false;
-    } else if (localStorage.getItem($('#userlog-in').val()) === $('#passlog-in').val()){
+    } else if (localStorage.getItem($('#userlog-in').val()) === $('#passlog-in').val()) {
         moveTo("gameSettings");
         return true;
-    }
-    else{
+    } else {
         alert("Error Password or Username")
         return false;
     }
 }
 
-function uniKeyCode(event,chooseKey) {
+function uniKeyCode(event, chooseKey) {
     var key = event.keyCode;
     if (chooseKey == 'up') {
         upkey = key;
@@ -104,8 +102,7 @@ function uniKeyCode(event,chooseKey) {
         downkey = key;
     } else if (chooseKey == 'left') {
         leftkey = key;
-    }
-    else {
+    } else {
         rightkey = key;
     }
     return key;
@@ -120,7 +117,8 @@ function checkboxrandomize() {
         text.style.display = "none";
     }
 }
-function gameSettingsCheck(){
+
+function gameSettingsCheck() {
     var checkBox = document.getElementById("randomcheck");
     if (checkBox.checked == false) {
         $('#gameSettingsForm').validate({
@@ -135,7 +133,7 @@ function gameSettingsCheck(){
                     required: true,
 
                 },
-                monsercounter: {
+                monstercounter: {
                     max: 4,
                     min: 1,
                     required: true
@@ -154,25 +152,48 @@ function gameSettingsCheck(){
                 },
             },
         });
-    }
-    else{
+        numofballs = $("#numofballs").val();
+        gametime = $("#gametime").val();
+        monsercounter = $("#monstercounter").val();
+        smallcolor = $("#smallcolor").val();
+        mediumcolor = $("#mediumcolor").val();
+        bigcolor = $("#bigcolor").val();
+
+        $("#displayup").text("UP key: " + $("#goup").val());
+        $("#displaydown").text("Down key: " + $("#godown").val());
+        $("#displayright").text("Right key: " + $("#goright").val());
+        $("#displayleft").text("Left key: " + $("#goleft").val());
+
+    } else {
         upkey = 38;
         downkey = 40;
         leftkey = 37;
         rightkey = 39;
 
-        numofballs = 50;
+        numofballs = 90;
         gametime = 80;
         monsercounter = 1;
-        smallcolor = 'red';
-        mediumcolor = 'black';
-        bigcolor = 'blue';
+        smallcolor = '#FF33B8';
+        mediumcolor = '#33FF82';
+        bigcolor = '#3433FF';
+
+        $("#displayup").text("UP key: Up arrow" );
+        $("#displaydown").text("Down key: Down arrow" );
+        $("#displayright").text("Right key: right arrow " );
+        $("#displayleft").text("Left key: left arrow" );
 
     }
-        event.preventDefault();
-        const form = $("#gameSettingsForm");
-        if (form.valid()) {
-            runGame();
-            moveTo("PacmanGame");
-        }
+
+    $("#foodisplay").text("food counter "+numofballs);
+    $("#smallfoodisplay").prop("value",smallcolor);
+    $("#mediumfoodisplay").prop("value",mediumcolor);
+    $("#bigfoodisplay").prop("value",bigcolor);
+    $("#timedisplay").text("game time "+ gametime);
+    $("#enemiesdisplay").text("total monsters "+monsercounter);
+    event.preventDefault();
+    const form = $("#gameSettingsForm");
+    if (form.valid()) {
+        runGame();
+        moveTo("PacmanGame");
+    }
 }

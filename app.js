@@ -6,6 +6,7 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var intervalM;
 var lastposition = 4;
 
 var upkey;
@@ -19,12 +20,13 @@ var monsercounter;
 var smallcolor;
 var mediumcolor;
 var bigcolor;
-
+var extratime =0.0;
 var monster1 = {};
 var monster2 = {};
 var monster3 = {};
 var monster4 = {};
-
+var bonus = {};
+var gotbonusallready;
 var lives = 5;
 
 function runGame() {
@@ -112,7 +114,17 @@ function Start() {
     monster3 = {x: 9, y: 0, direction: 'right'};
     monster1 = {x: 0, y: 0, direction: 'down'};
     monster4 = {x: 9, y: 9, direction: 'up'};
-
+    if(monsercounter==4)
+        bonus = {x:4,y:4,direction:'up'};
+    else
+        bonus = {x:9,y:9,direction:'up'};
+    gotbonusallready=false;
+    //extra lives
+    var cell = findRandomEmptyCell(board);
+    board[cell[0]][cell[1]] = 10;
+    //extra time
+    var cell2 = findRandomEmptyCell(board);
+    board[cell2[0]][cell2[1]] = 15;
 
     while (food_remain > 0) {
         var emptyCell = findRandomEmptyCell(board);
@@ -134,13 +146,27 @@ function Start() {
         },
         false
     );
-    interval = setInterval(UpdatePosition, 200);
-    //interval = setInterval(MoveMonster, 200);
+    interval = setInterval(UpdatePosition, 120);
+    intervalM = setInterval(MoveMonsters, 300);
 }
 
-function paintwalls() {
-
+function MoveMonsters() {
+    MoveMonster(bonus);
+    MoveMonster(monster1);
+    if (monsercounter > 1) {
+        MoveMonster(monster2);
+        if (monsercounter > 2) {
+            MoveMonster(monster3);
+            if (monsercounter > 3) {
+                MoveMonster(monster4);
+            }
+        }
+    }
 }
+
+
+
+
 
 function findRandomEmptyCell(board) {
     var i = Math.floor(Math.random() * 9 + 1);
@@ -172,7 +198,9 @@ function Draw(y) {
         lastposition = y
     canvas.width = canvas.width; //clean board
     lblScore.value = score;
-    lblTime.value = time_elapsed;
+    lblTime.value = (time_elapsed - extratime);
+    lblname.value =  $("#userlog-in").val();
+
     for (var i = 0; i < 10; i++) {
         for (var j = 0; j < 10; j++) {
             var center = new Object();
@@ -222,6 +250,25 @@ function Draw(y) {
                 context.rect(center.x - 30, center.y - 30, 60, 60);
                 context.fillStyle = "grey"; //color
                 context.fill();
+            } else if (board[i][j]==10){
+                context.beginPath();
+                context.rect(center.x - 30, center.y - 30, 20, 20);
+                context.fillStyle = "green"; //color
+                context.fill();
+            }
+            else if (board[i][j]==15){
+                context.beginPath();
+                context.rect(center.x - 30, center.y - 30, 50, 20);
+                context.fillStyle = "purple"; //color
+                context.fill();
+            }
+            if (bonus.x == i && bonus.y == j && !gotbonusallready) {
+                context.beginPath();
+                context.arc(center.x, center.y, 15, 0 * Math.PI, 2 * Math.PI);
+                context.lineTo(center.x, center.y);
+                context.fillStyle = 'black'; //color
+                context.fill();
+                context.beginPath();
             }
             if (monster1.x == i && monster1.y == j) {
                 context.beginPath();
@@ -262,13 +309,14 @@ function Draw(y) {
 
 function MoveMonster(monster) {
     let Options = [];
-
+    let chcker = false;
     if (monster.x + 1 <= 9 && board[monster.x + 1][monster.y] != 4) {
         Options.push({x: monster.x + 1, y: monster.y, direction: 'right'});
         if (monster.direction == 'right') {
-            updateMonPos(monster, {x: monster.x + 1, y: monster.y, direction: 'right'});
-            return true;
+            updateMonPos(monster, {x: monster.x + 1, y: monster.y, direction: 'right'})
+            chcker=true;
         }
+
 
     }
 
@@ -277,57 +325,75 @@ function MoveMonster(monster) {
 
         if (monster.direction == 'left') {
             updateMonPos(monster, {x: monster.x - 1, y: monster.y, direction: 'left'});
-            return true;
+            chcker=true;
         }
+
+
     }
 
     if (monster.y + 1 <= 9 && board[monster.x][monster.y + 1] != 4) {
         Options.push({x: monster.x, y: monster.y + 1, direction: 'down'});
         if (monster.direction == 'down') {
             updateMonPos(monster, {x: monster.x, y: monster.y + 1, direction: 'down'});
-            return true;
+            chcker=true;
         }
+
+
     }
     if (monster.y - 1 >= 0 && board[monster.x][monster.y - 1] != 4) {
         Options.push({x: monster.x, y: monster.y - 1, direction: 'up'});
         if (monster.direction == 'up') {
             updateMonPos(monster, {x: monster.x, y: monster.y - 1, direction: 'up'});
-            return true;
+            chcker=true;
         }
+
     }
-    var newMove = Options[~~(Math.random() * Options.length)];
-    updateMonPos(monster, newMove);
-    return true;
+    if(!chcker) {
+        var newMove = Options[~~(Math.random() * Options.length)];
+        updateMonPos(monster, newMove);
+    }
 }
 
 function updateMonPos(monster, newMove) {
     monster.x = newMove.x;
     monster.y = newMove.y;
     monster.direction = newMove.direction;
+
 }
 
 function UpdatePosition() {
     board[shape.i][shape.j] = 0;
     var x = GetKeyPressed();
+    let value =0;
+
     if (x == 1) {
         if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
             shape.j--;
+            value=upkey;
         }
+
     }
     if (x == 2) {
         if (shape.j < 9 && board[shape.i][shape.j + 1] != 4) {
             shape.j++;
+            value=downkey;
         }
+
     }
     if (x == 3) {
         if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
             shape.i--;
+            value=leftkey;
         }
+
     }
     if (x == 4) {
         if (shape.i < 9 && board[shape.i + 1][shape.j] != 4) {
             shape.i++;
+            value=rightkey;
         }
+
+
     }
     if (board[shape.i][shape.j] == 1) {
         score += 5;
@@ -339,54 +405,85 @@ function UpdatePosition() {
         score += 25;
     }
 
-    MoveMonster(monster1);
-    killpacman(monster1);
-    if (monsercounter > 1) {
-        MoveMonster(monster2);
-        killpacman(monster2);
-        if (monsercounter > 2) {
-            MoveMonster(monster3);
-            killpacman(monster3);
+
+    if(board[shape.i][shape.j]==10){
+        lives++;
+        $("#showlives").text(lives);
+    }
+    if(board[shape.i][shape.j]==15){
+        extratime=10.0;
+    }
+    if(monster1.x == shape.i && monster1.y==shape.j ){
+        killpacman(monster1,value);
+    }
+    if(monsercounter>1) {
+        if (monster2.x == shape.i && monster2.y == shape.j) {
+            killpacman(monster2, value);
         }
-        if (monsercounter > 3) {
-            MoveMonster(monster4);
-            killpacman(monster4);
+        if(monsercounter>2){
+            if(monster3.x == shape.i && monster3.y==shape.j ){
+                killpacman(monster3,value);
+            }
+            if(monsercounter>3){
+                if(monster4.x == shape.i && monster4.y==shape.j ){
+                    killpacman(monster4,value);
+                }
+            }
         }
     }
+
+    if(bonus.x == shape.i && bonus.y==shape.j && !gotbonusallready ){
+        score+=50;
+        gotbonusallready = true;
+    }
+
     board[shape.i][shape.j] = 2;
 
-
     var currentTime = new Date();
-    time_elapsed = (currentTime - start_time) / 1000;
-    if (time_elapsed >= gametime) {
+    time_elapsed = (currentTime - start_time  ) / 1000;
+    if ((time_elapsed-extratime) >= gametime) {
         if (score < 100) {
             window.clearInterval(interval);
+            window.clearInterval(intervalM);
             window.alert("You are better than " + score + " points!\"");
         } else {
             window.clearInterval(interval);
+            window.clearInterval(intervalM);
             window.alert("Winner!!! you have" + score + "points");
         }
     }
-
 
     Draw(x);
 
 }
 
-function killpacman(monster) {
-    if (monster.x == shape.i && monster.y == shape.j) {
-        window.alert("you died, only " + lives - 1 + " left");
+function killpacman(monster,x) {
+
         lives--;
+        $("#showlives").text(lives);
+        score-=10;
+        keysDown[x]=false;
         if (lives == 0) {
-            //game over
+            window.clearInterval(interval);
+            window.clearInterval(intervalM);
+            window.alert("You are a Loser");
         }
+
         monster2 = {x: 0, y: 9, direction: 'left'};
         monster3 = {x: 9, y: 0, direction: 'right'};
         monster1 = {x: 0, y: 0, direction: 'down'};
         monster4 = {x: 9, y: 9, direction: 'up'};
         shape.i = ~~(Math.random() * 9) + 1;
         shape.j = ~~(Math.random() * 9) + 1;
-    }
+        console.log(shape.i + "     " + shape.j);
+
+
+}
+function restartgame(){
+    window.clearInterval(interval);
+    window.clearInterval(intervalM);
+    extratime=0;
+    Start();
 }
 
 

@@ -136,7 +136,13 @@ nav{
     z-index: 1;
     background: black;
     margin: 0;
-    width:calc(100% - 60px)
+    width:calc(100% - 60px);
 }
-
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    width: 70%;
+}
 

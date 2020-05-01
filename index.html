@@ -10,6 +10,7 @@
     <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
     <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
 
+
 </head>
 
 <body>
@@ -26,7 +27,7 @@
 </div>
 
 <div id="main">
-    <section id="WelcomePage" class="choosenScreen">
+    <section id="WelcomePage">
         <div id="start_buttons">
             <button class="Buttons" id="registerButton" onclick="moveTo('registerpage')"> Register</button>
             <button class="Buttons" id="loginButton" onclick="moveTo('log-in')"> Login</button>
@@ -52,7 +53,7 @@
         </div>
 
     </section>
-    <section id="gameSettings">
+    <section id="gameSettings" class="choosenScreen">
         <form id="gameSettingsForm" method="post" action="" onsubmit="gameSettingsCheck()">
             <label for="randomcheck">Use random rules and arrows to play</label>
             <input type="checkbox" id="randomcheck" onclick="checkboxrandomize()">
@@ -78,23 +79,23 @@
                 </div>
                 <div>
                     <label for="smallcolor">Small food color( 5 points each):</label>
-                    <input id="smallcolor" name="smallcolor" type="text">
+                    <input type="color" id="smallcolor" name="smallcolor" value="#ff0000">
                 </div>
                 <div>
                     <label for="mediumcolor">Medium food color( 15 points each):</label>
-                    <input id="mediumcolor" name="mediumcolor" type="text">
+                    <input type="color" id="mediumcolor" name="mediumcolor" value="#df0000" >
                 </div>
                 <div>
                     <label for="bigcolor">Big food color( 25 points each):</label>
-                    <input id="bigcolor" name="bigcolor" type="text">
+                    <input id="bigcolor" name="bigcolor" type="color" value="#sf0000">
                 </div>
                 <div>
-                    <label for="gamtime">Game Time( at least 60 seconds):</label>
-                    <input id="gamtime" name="gamtime" type="text">
+                    <label for="gametime">Game Time( at least 60 seconds):</label>
+                    <input id="gametime" name="gametime" type="text">
                 </div>
                 <div>
-                    <label for="monsercounter">How many Monsters( between 1 and 4):</label>
-                    <input id="monsercounter" name="monsercounter" type="text">
+                    <label for="monstercounter">How many Monsters( between 1 and 4):</label>
+                    <input id="monstercounter" name="monstercounter" type="text">
                 </div>
             </div>
             <input id="startgame" type="submit" value="Play!" onclick="">
@@ -105,16 +106,45 @@
 
 
     <section id="PacmanGame">
-        <div id="score">
-            <label for="lblScore">SCORE:</label>
-            <input id="lblScore" type="text"/>
-        </div>
-        <div id="time">
-            <label for="lblTime">TIME:</label>
-            <input id="lblTime" type="text"/>
-        </div>
-        <div id="game">
-            <canvas id="canvas" height="600" width="600"></canvas>
+        <div style="display: table-row;">
+            <div style="display: table-cell;">
+                <div id="score">
+                    <label for="lblScore">SCORE:</label>
+                    <input id="lblScore" type="text"/>
+                </div>
+                <div id="time">
+                    <label for="lblTime">TIME:</label>
+                    <input id="lblTime" type="text"/>
+                </div>
+                <div id="showname">
+                    <label for="lblname">USER NAME:</label>
+                    <input id="lblname" type="text"/>
+                </div>
+                <div id="showlives">
+                    5
+                </div>
+
+                <canvas id="canvas" style="border: none;" width="600" height="600" align="center"></canvas>
+            </div>
+            <div style="display: table-cell;" class="center">
+                <h2>Settings and rules:</h2>
+                <div id="displayup"></div>
+                <div id="displaydown"></div>
+                <div id="displayleft"></div>
+                <div id="displayright"></div>
+                <div id="foodisplay"></div>
+                <h3>small food color</h3>
+                <input type="color" id="smallfoodisplay"disabled></input>
+                <br>
+                <h3>medium food color</h3>
+                <input type="color" id="mediumfoodisplay" disabled></input>
+                <br>
+                <h3>big food color</h3>
+                <input type="color" id="bigfoodisplay" disabled></input>
+                <div id="timedisplay"></div>
+                <div id="enemiesdisplay"></div>
+                <button id="restart" onclick="restartgame()">Restart</button>
+            </div>
         </div>
     </section>
 
@@ -148,10 +178,11 @@
             </div>
         </form>
     </section>
+    </section>
 </div>
-<script>
+    <script>
 
-</script>
+    </script>
 </body>
 
 </html>
