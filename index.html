@@ -3,6 +3,15 @@
 
 <head>
     <script src="./jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <link href='https://fonts.googleapis.com/css?family=Permanent+Marker:400' rel='stylesheet' type='text/css'>
+
+
+
+    <script src="./jquery-3.4.1.slim.min.js"></script>
     <script type="text/javascript" src="./app.js"></script>
     <script type="text/javascript" src="./information.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css"/>
@@ -11,101 +20,123 @@
     <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
 
 
+
 </head>
 
 <body>
-<div class="custom-padding" style="-webkit-user-drag: auto" id="menu2">
+<div class="custom-padding">
     <nav id="menu">
         <ul class="menu-area">
-            <li><a href="#" data-option="WelcomePage" onclick="showNavOption(this)">Home</a></li>
-            <li><a href="#" data-option="log-in" onclick="showNavOption(this)">log-in</a></li>
-            <li><a href="#" data-option="registerpage" onclick="showNavOption(this)">Register</a></li>
+            <li><a href="#" data-option="WelcomePage" onclick="switchdivs('WelcomePage')">Home</a></li>
+            <li><a href="#" data-option="log-in" onclick="switchdivs('log-in')">log-in</a></li>
+            <li><a href="#" data-option="registerpage" onclick="switchdivs('registerpage')">Register</a></li>
+            <li><a href="#Aboutpage"  id="about" onclick="menuToAbout()">About</a></li>
         </ul>
 
     </nav>
 
 </div>
 
-<div id="main">
-    <section id="WelcomePage">
+<div id="main" >
+    <div id="WelcomePage">
         <div id="start_buttons">
-            <button class="Buttons" id="registerButton" onclick="moveTo('registerpage')"> Register</button>
-            <button class="Buttons" id="loginButton" onclick="moveTo('log-in')"> Login</button>
-            <button class="Buttons" id="showB" onclick="moveTo('PacmanGame')"> Start</button>
+            <button class="Buttons" style="text-align: center" id="registerButton" onclick="switchdivs('registerpage')">
+                Register
+            </button>
+            <button class="Buttons" style="text-align: center" id="loginButton" onclick="switchdivs('log-in')"> Login
+            </button>
         </div>
-    </section>
-    <section id="log-in" method="post" action="">
-        <h2>Log in </h2>
-        <div>
-            <label for="userName">User Name : </label>
-            <input type="text" id="userlog-in" name="userName"></input>
+    </div>
+
+
+    <div id="log-in" style="display: none">
+        <br>
+        <br>
+        <div class="logeditor" style="height: 300px;" >
+            <h2>Log in </h2>
+            <form id="logform" onsubmit="logingGame()">
+                <ul>
+                    <li>
+                        <input type="text" id="userlog-in" name="userName" placeholder="type user name..."></input>
+                    </li>
+                    <br>
+                    <li>
+                        <input type="password" id="passlog-in" name="name" placeholder="type password..."></input>
+                    </li>
+
+                    <input type="submit" value="Log-in">
+
+                </ul>
+            </form>
+
+
         </div>
-        <div>
-            </br>
-            <label for="name">Password : </label>
-            <input type="password" id="passlog-in" name="name"></input>
+
+    </div>
+    <div id="gameSettings" style="display: none;">
+        <div class="logeditor" style="height: 530px; width: 500px ;background: black ">
+            <form id="gameSettingsForm" method="post" action="" onsubmit="gameSettingsCheck()">
+                <label for="randomcheck">Use random rules and arrows to play</label>
+                <input type="checkbox" id="randomcheck" onclick="checkboxrandomize()">
+                <div id="rulesdiv">
+                    <h1>Choose your keyboard layout</h1>
+                    <div class="form-inline">
+                        <ul class="form-inline">
+                            <li>
+                                <input id="goup" name="goup" type="text" onkeydown="uniKeyCode(event,'up')"
+                                       autocomplete="off"
+                                       placeholder="up key" style=" color: #FFFFFF">
+                            </li>
+                            <li>
+                                <input id="godown" name="godown" type="text" onkeydown="uniKeyCode(event,'down')"
+                                       autocomplete="off" placeholder="down key" style=" color: #FFFFFF">
+                            </li>
+                            <li>
+                                <input id="goleft" name="goleft" type="text" onkeydown="uniKeyCode(event,'left')"
+                                       autocomplete="off" placeholder="left key" style=" color: #FFFFFF">
+                            </li>
+                            <li>
+                                <input id="goright" name="goright" type="text" onkeydown="uniKeyCode(event,'right')"
+                                       autocomplete="off" placeholder="right key" style=" color: #FFFFFF">
+                            </li>
+                        </ul>
+
+                    </div>
+                    <h1>Choose game rules</h1>
+                    <div>
+                        <input id="numofballs" name="numofballs" type="text"
+                               placeholder="How much food do you crave?(at least 50 no more then 90) :"
+                               style=" color: #FFFFFF">
+
+                    </div>
+                    <div class="form-inline" style=" color: #797979">
+                        <label for="smallcolor">small color</label>
+                        <input type="color" id="smallcolor" name="smallcolor" value="#ff0000"
+                               placeholder="Small food color( 5 points each):" style=" color: #FFFFFF">
+                        <label for="mediumcolor">medium color</label>
+                        <input type="color" id="mediumcolor" name="mediumcolor" value="#df0000"
+                               placeholder="Medium food color( 15 points each):" style=" color: #FFFFFF">
+                        <label for="bigcolor">big color</label>
+                        <input id="bigcolor" name="bigcolor" type="color" value="#sf0000"
+                               placeholder="Big food color( 25 points each):" style=" color: #FFFFFF">
+                    </div>
+                    <div>
+                        <input id="gametime" name="gametime" type="text" placeholder="Game Time( at least 60 seconds):"
+                               style=" color: #FFFFFF">
+                    </div>
+                    <div>
+                        <input id="monstercounter" name="monstercounter" type="text"
+                               placeholder="How many Monsters( between 1 and 4):" style=" color: #FFFFFF">
+                    </div>
+                </div>
+                <input id="startgame" type="submit" value="Play!" onclick="">
+
+            </form>
         </div>
-        </br>
-        </br>
-        <div>
-            <button class="Buttons" id="log-in-button" onclick="logingGame()">log-in</button>
-
-        </div>
-
-    </section>
-    <section id="gameSettings" class="choosenScreen">
-        <form id="gameSettingsForm" method="post" action="" onsubmit="gameSettingsCheck()">
-            <label for="randomcheck">Use random rules and arrows to play</label>
-            <input type="checkbox" id="randomcheck" onclick="checkboxrandomize()">
-            <div id="rulesdiv">
-                <h1>Choose your keyboard layout</h1>
-                <div>
-                    <label for="goup">Up :</label>
-                    <input id="goup" name="goup" type="text" onkeydown="uniKeyCode(event,'up')">
-                    <label for="godown">Down :</label>
-                    <input id="godown" name="godown" type="text" onkeydown="uniKeyCode(event,'down')">
-                    <label for="goleft">Left :</label>
-                    <input id="goleft" name="goleft" type="text" onkeydown="uniKeyCode(event,'left')">
-                    <label for="goright">Right :</label>
-                    <input id="goright" name="goright" type="text" onkeydown="uniKeyCode(event,'right')">
-                </div>
-                <h1>Choose game rules</h1>
+    </div>
 
 
-                <div>
-                    <label for="numofballs">How much food do you crave?(at least 50 no more then 90) :</label>
-                    <input id="numofballs" name="numofballs" type="text">
-
-                </div>
-                <div>
-                    <label for="smallcolor">Small food color( 5 points each):</label>
-                    <input type="color" id="smallcolor" name="smallcolor" value="#ff0000">
-                </div>
-                <div>
-                    <label for="mediumcolor">Medium food color( 15 points each):</label>
-                    <input type="color" id="mediumcolor" name="mediumcolor" value="#df0000" >
-                </div>
-                <div>
-                    <label for="bigcolor">Big food color( 25 points each):</label>
-                    <input id="bigcolor" name="bigcolor" type="color" value="#sf0000">
-                </div>
-                <div>
-                    <label for="gametime">Game Time( at least 60 seconds):</label>
-                    <input id="gametime" name="gametime" type="text">
-                </div>
-                <div>
-                    <label for="monstercounter">How many Monsters( between 1 and 4):</label>
-                    <input id="monstercounter" name="monstercounter" type="text">
-                </div>
-            </div>
-            <input id="startgame" type="submit" value="Play!" onclick="">
-
-        </form>
-
-    </section>
-
-
-    <section id="PacmanGame">
+    <div id="PacmanGame" style="display: none; ">
         <div style="display: table-row;">
             <div style="display: table-cell;">
                 <div id="score">
@@ -126,63 +157,78 @@
 
                 <canvas id="canvas" style="border: none;" width="600" height="600" align="center"></canvas>
             </div>
-            <div style="display: table-cell;" class="center">
+            <div style="display: table-cell;" class="logeditor">
                 <h2>Settings and rules:</h2>
                 <div id="displayup"></div>
+                <br>
                 <div id="displaydown"></div>
+                <br>
                 <div id="displayleft"></div>
+                <br>
                 <div id="displayright"></div>
+                <br>
                 <div id="foodisplay"></div>
+                <br>
                 <h3>small food color</h3>
-                <input type="color" id="smallfoodisplay"disabled></input>
+                <input type="color" id="smallfoodisplay" disabled></input>
                 <br>
                 <h3>medium food color</h3>
                 <input type="color" id="mediumfoodisplay" disabled></input>
                 <br>
                 <h3>big food color</h3>
                 <input type="color" id="bigfoodisplay" disabled></input>
+                <br>
                 <div id="timedisplay"></div>
+                <br>
                 <div id="enemiesdisplay"></div>
                 <button id="restart" onclick="restartgame()">Restart</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="registerpage">
-        <form id="first_form" method="post" action="" onsubmit="submitRegistration()" role="form">
-            <h2>Registration </h2>
-            <div>
-                <label for="userName">UserName : </label>
-                <input type="text" id="userName" name="userName"></input>
-            </div>
-            <div>
-                <label for="name">Full Name:</label>
-                <input type="text" id="name" name="name"></input>
-            </div>
-            <div>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email"></input>
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password"></input>
-            </div>
+    <div id="registerpage" style="display: none">
+        <div class="logeditor">
+            <form id="first_form" method="post" action="" onsubmit="submitRegistration()" role="form">
+                <h2>Registration </h2>
+                <div>
+                    <input type="text" id="userName" name="userName" placeholder="choose your user name"></input>
+                </div>
+                <div>
+                    <input type="text" id="name" name="name" placeholder="full name"></input>
+                </div>
+                <div>
+                    <input type="email" id="email" name="email" placeholder="email address"></input>
+                </div>
+                <div>
+                    <input type="password" id="password" name="password"
+                           placeholder="password...  longer then 8"></input>
+                </div>
 
-            <div>
-                <label for="password">Birth Date:</label>
-                <input type="date" id="form_birth_date" name="trip-start" required="">
-            </div>
-
-            <div>
-                <input type="submit" value="submit" onclick=""/>
-            </div>
-        </form>
-    </section>
-    </section>
+                <div>
+                    <input type="date" id="form_birth_date" name="trip-start" required="" placeholder="date of birth">
+                </div>
+                <input type="submit" value="Register">
+            </form>
+        </div>
+    </div>
+    <div id="Aboutpage" title="About us" class="modal">
+        <p>
+            We are Noa weiss and Itamar zigel the developers of this game
+             we used jquery for referencing the document variables and for dialogs
+            we used some generic templates on-line mostly for inspiration
+        </p>
+        <input type="button" name="closeAbout" id="closeAbout" value="Close" onclick="closeAbout()">
+    </div>
+    <footer class="footer">
+        <p>
+            This website was developed with javascript ,html5 ,css and jquery API by Noa Weiss and Itamar Zigel
+            Contact us via mail zigelitamar@gmail.com or noaweiss@gmail.com
+        </p>
+    </footer>
 </div>
-    <script>
 
-    </script>
+
 </body>
+
 
 </html>

@@ -30,8 +30,7 @@ function showSection(clickedName) {
      */
     const newActivatedSection = document.getElementById("main").querySelector(`#${clickedName}`);
     newActivatedSection.classList.add("choosenScreen");
-    // var newActivatedNav = document.getElementsByClassName(`${clickedName}Nav`)[0];
-    // newActivatedNav.classList.add("activeNav");
+
 
 }
 
@@ -51,13 +50,14 @@ function submitRegistration() {
                 required: true
             },
             password: {
-                pattern: '^(?=.*\\d)(?=.*[a-zA-Z]).{8,200}$',
+                pattern: '^(?=.*\\d)(?=.*[a-zA-Z]).{6,200}$',
                 required: true,
 
             },
             name: {
                 pattern: '^[a-zA-Z]*$',
                 required: true
+
             },
 
             email: {
@@ -66,7 +66,7 @@ function submitRegistration() {
             },
 
         },
-        message: "password must be greater then 8 "
+
     });
 
     event.preventDefault();
@@ -74,23 +74,21 @@ function submitRegistration() {
     if (form.valid()) {
         var user_name = $('#userName').val();
         var password = $('#password').val();
+        window.alert("registered ")
         localStorage.setItem(user_name, password);
-        moveTo("WelcomePage");
+        switchdivs("WelcomePage");
     }
 
 }
 
 function logingGame() {
-
     if (localStorage.getItem($('#userlog-in').val()) === null) {
-        alert("Error Password or Username")
-        return false;
+        //alert("Error Password or Username")
     } else if (localStorage.getItem($('#userlog-in').val()) === $('#passlog-in').val()) {
-        moveTo("gameSettings");
-        return true;
+        event.preventDefault()
+        switchdivs("gameSettings");
     } else {
-        alert("Error Password or Username")
-        return false;
+        //alert("Error Password or Username")
     }
 }
 
@@ -98,6 +96,7 @@ function uniKeyCode(event, chooseKey) {
     var key = event.keyCode;
     if (chooseKey == 'up') {
         upkey = key;
+
     } else if (chooseKey == 'down') {
         downkey = key;
     } else if (chooseKey == 'left') {
@@ -105,6 +104,14 @@ function uniKeyCode(event, chooseKey) {
     } else {
         rightkey = key;
     }
+    if (key == 38)
+        $("#goup").val("Up key");
+    if (key == 40)
+        $("#godown").val("Down key");
+    if (key == 39)
+        $("#goright").val("right key");
+    if (key == 37)
+        $("#goleft").val("left key");
     return key;
 }
 
@@ -173,27 +180,92 @@ function gameSettingsCheck() {
         numofballs = 90;
         gametime = 80;
         monsercounter = 1;
-        smallcolor = '#FF33B8';
-        mediumcolor = '#33FF82';
-        bigcolor = '#3433FF';
+        smallcolor = getRandomColor();
+        mediumcolor =getRandomColor();
+        bigcolor = getRandomColor();
 
-        $("#displayup").text("UP key: Up arrow" );
-        $("#displaydown").text("Down key: Down arrow" );
-        $("#displayright").text("Right key: right arrow " );
-        $("#displayleft").text("Left key: left arrow" );
+        $("#displayup").text("UP key: Up arrow");
+        $("#displaydown").text("Down key: Down arrow");
+        $("#displayright").text("Right key: right arrow ");
+        $("#displayleft").text("Left key: left arrow");
 
     }
 
-    $("#foodisplay").text("food counter "+numofballs);
-    $("#smallfoodisplay").prop("value",smallcolor);
-    $("#mediumfoodisplay").prop("value",mediumcolor);
-    $("#bigfoodisplay").prop("value",bigcolor);
-    $("#timedisplay").text("game time "+ gametime);
-    $("#enemiesdisplay").text("total monsters "+monsercounter);
+    $("#foodisplay").text("food counter: " + numofballs);
+    $("#smallfoodisplay").prop("value", smallcolor);
+    $("#mediumfoodisplay").prop("value", mediumcolor);
+    $("#bigfoodisplay").prop("value", bigcolor);
+    $("#timedisplay").text("game time: " + gametime);
+    $("#enemiesdisplay").text("total monsters: " + monsercounter);
     event.preventDefault();
     const form = $("#gameSettingsForm");
     if (form.valid()) {
         runGame();
-        moveTo("PacmanGame");
+        switchdivs("PacmanGame");
     }
+
 }
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+function switchdivs(newdiv) {
+    var mainFrameTwo = document.getElementById(newdiv);
+    var oldframe1 = document.getElementById("WelcomePage");
+    var oldframe2 = document.getElementById("log-in");
+    var oldframe3 = document.getElementById("gameSettings");
+    var oldframe4 = document.getElementById("PacmanGame");
+    var oldframe5 = document.getElementById("registerpage");
+    if (newdiv == "WelcomePage") {
+        mainFrameTwo.style.display = 'block';
+        oldframe3.style.display = 'none';
+        oldframe4.style.display = 'none';
+        oldframe5.style.display = 'none';
+        oldframe2.style.display = 'none';
+    }
+    if (newdiv == "log-in") {
+        mainFrameTwo.style.display = 'block';
+        oldframe1.style.display = 'none';
+        oldframe4.style.display = 'none';
+        oldframe5.style.display = 'none';
+        oldframe3.style.display = 'none';
+    }
+    if (newdiv == "gameSettings") {
+        mainFrameTwo.style.display = 'block';
+        oldframe1.style.display = 'none';
+        oldframe4.style.display = 'none';
+        oldframe5.style.display = 'none';
+        oldframe2.style.display = 'none';
+    }
+    if (newdiv == "PacmanGame") {
+        mainFrameTwo.style.display = 'block';
+        oldframe1.style.display = 'none';
+        oldframe3.style.display = 'none';
+        oldframe5.style.display = 'none';
+        oldframe2.style.display = 'none';
+    }
+    if (newdiv == "registerpage") {
+        mainFrameTwo.style.display = 'block';
+        oldframe1.style.display = 'none';
+        oldframe4.style.display = 'none';
+        oldframe3.style.display = 'none';
+        oldframe2.style.display = 'none';
+    }
+
+}
+function menuToAbout(){
+    $("#Aboutpage").modal();
+    if(interval !=undefined){
+        window.clearInterval(interval);
+    }
+
+}
+function closeModal(){
+    $.modal.close();
+}
+
