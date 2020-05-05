@@ -2,12 +2,38 @@
 <html>
 
 <head>
+<!--    <script type="text/javascript" src="./app.js"></script>-->
+<!--    <script src="./jquery-3.4.1.slim.min.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>-->
+
+
+<!--    <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>-->
+
+
+
+
+<!--    <script type="text/javascript" src="./information.js"></script>-->
+<!--    <link rel="stylesheet" type="text/css" href="style.css"/>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>-->
+<!--    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>-->
+<!--    <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>-->
+
+
+<!--    &lt;!&ndash; Remember to include jQuery :) &ndash;&gt;-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>-->
+
+<!--    &lt;!&ndash; jQuery Modal &ndash;&gt;-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />-->
+
     <script src="./jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <link href='https://fonts.googleapis.com/css?family=Permanent+Marker:400' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
 
 
 
@@ -20,7 +46,6 @@
     <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
 
 
-
 </head>
 
 <body>
@@ -30,8 +55,21 @@
             <li><a href="#" data-option="WelcomePage" onclick="switchdivs('WelcomePage')">Home</a></li>
             <li><a href="#" data-option="log-in" onclick="switchdivs('log-in')">log-in</a></li>
             <li><a href="#" data-option="registerpage" onclick="switchdivs('registerpage')">Register</a></li>
-            <li><a href="#Aboutpage"  id="about" onclick="menuToAbout()">About</a></li>
+<!--            <li><a href="#Aboutpage"  id="about" onclick="menuToAbout()">About</a></li>-->
+            <li><a href="#about" rel="modal:open">About</a></li>
+
+
         </ul>
+        <div id="about" class="modal">
+            <p>
+                We are Noa weiss and Itamar zigel the developers of this game
+                we used jquery for referencing the document variables and for dialogs
+                we used some generic templates on-line mostly for inspiration
+            </p>
+<!--            <a href="#" rel="modal:close">Close</a>-->
+        </div>
+
+        <!-- Link to open the modal -->
 
     </nav>
 
@@ -57,14 +95,14 @@
             <form id="logform" onsubmit="logingGame()">
                 <ul>
                     <li>
-                        <input type="text" id="userlog-in" name="userName" placeholder="type user name..."></input>
+                        <input style=" font-family: 'Aclonica';" type="text" id="userlog-in" name="userName" placeholder="type user name..."></input>
                     </li>
                     <br>
                     <li>
-                        <input type="password" id="passlog-in" name="name" placeholder="type password..."></input>
+                        <input style=" font-family: 'Aclonica';" type="password" id="passlog-in" name="name" placeholder="type password..."></input>
                     </li>
 
-                    <input type="submit" value="Log-in">
+                    <input style=" font-family: 'Aclonica';" type="submit" value="Log-in">
 
                 </ul>
             </form>
@@ -79,57 +117,58 @@
                 <label for="randomcheck">Use random rules and arrows to play</label>
                 <input type="checkbox" id="randomcheck" onclick="checkboxrandomize()">
                 <div id="rulesdiv">
-                    <h1>Choose your keyboard layout</h1>
-                    <div class="form-inline">
+                    <br>
+                    <h1 style="font-size: 22px">Choose your keyboard layout</h1>
+                    <div  class="form-inline">
                         <ul class="form-inline">
                             <li>
-                                <input id="goup" name="goup" type="text" onkeydown="uniKeyCode(event,'up')"
+                                <input style=" font-family: 'Aclonica';" id="goup" name="goup" type="text" onkeydown="uniKeyCode(event,'up')"
                                        autocomplete="off"
-                                       placeholder="up key" style=" color: #FFFFFF">
+                                       placeholder="up key" style=" color: #FFFFFF ">
                             </li>
                             <li>
-                                <input id="godown" name="godown" type="text" onkeydown="uniKeyCode(event,'down')"
+                                <input style=" font-family: 'Aclonica';" id="godown" name="godown" type="text" onkeydown="uniKeyCode(event,'down')"
                                        autocomplete="off" placeholder="down key" style=" color: #FFFFFF">
                             </li>
                             <li>
-                                <input id="goleft" name="goleft" type="text" onkeydown="uniKeyCode(event,'left')"
+                                <input style=" font-family: 'Aclonica';" id="goleft" name="goleft" type="text" onkeydown="uniKeyCode(event,'left')"
                                        autocomplete="off" placeholder="left key" style=" color: #FFFFFF">
                             </li>
                             <li>
-                                <input id="goright" name="goright" type="text" onkeydown="uniKeyCode(event,'right')"
+                                <input style=" font-family: 'Aclonica';" id="goright" name="goright" type="text" onkeydown="uniKeyCode(event,'right')"
                                        autocomplete="off" placeholder="right key" style=" color: #FFFFFF">
                             </li>
                         </ul>
 
                     </div>
-                    <h1>Choose game rules</h1>
+                    <h1 style="font-size: 22px">Choose game rules</h1>
                     <div>
                         <input id="numofballs" name="numofballs" type="text"
                                placeholder="How much food do you crave?(at least 50 no more then 90) :"
-                               style=" color: #FFFFFF">
+                               style=" color: #FFFFFF;font-family: 'Aclonica';">
 
                     </div>
                     <div class="form-inline" style=" color: #797979">
                         <label for="smallcolor">small color</label>
-                        <input type="color" id="smallcolor" name="smallcolor" value="#ff0000"
-                               placeholder="Small food color( 5 points each):" style=" color: #FFFFFF">
+                        <input type="color" id="smallcolor" name="smallcolor" value="#FF0000"
+                               placeholder="Small food color( 5 points each):" style=" color: #FFFFFF;">
                         <label for="mediumcolor">medium color</label>
-                        <input type="color" id="mediumcolor" name="mediumcolor" value="#df0000"
-                               placeholder="Medium food color( 15 points each):" style=" color: #FFFFFF">
+                        <input type="color" id="mediumcolor" name="mediumcolor" value="#008000"
+                               placeholder="Medium food color( 15 points each):" style=" color: #FFFFFF;">
                         <label for="bigcolor">big color</label>
-                        <input id="bigcolor" name="bigcolor" type="color" value="#sf0000"
-                               placeholder="Big food color( 25 points each):" style=" color: #FFFFFF">
+                        <input id="bigcolor" name="bigcolor" type="color" value="#0000FF"
+                               placeholder="Big food color( 25 points each):" style=" color: #FFFFFF;">
                     </div>
                     <div>
-                        <input id="gametime" name="gametime" type="text" placeholder="Game Time( at least 60 seconds):"
+                        <input style=" font-family: 'Aclonica';" id="gametime" name="gametime" type="text" placeholder="Game Time( at least 60 seconds):"
                                style=" color: #FFFFFF">
                     </div>
                     <div>
-                        <input id="monstercounter" name="monstercounter" type="text"
+                        <input style=" font-family: 'Aclonica';" id="monstercounter" name="monstercounter" type="text"
                                placeholder="How many Monsters( between 1 and 4):" style=" color: #FFFFFF">
                     </div>
                 </div>
-                <input id="startgame" type="submit" value="Play!" onclick="">
+                <input style=" font-family: 'Aclonica';" id="startgame" type="submit" value="Play!" onclick="">
 
             </form>
         </div>
@@ -191,23 +230,23 @@
             <form id="first_form" method="post" action="" onsubmit="submitRegistration()" role="form">
                 <h2>Registration </h2>
                 <div>
-                    <input type="text" id="userName" name="userName" placeholder="choose your user name"></input>
+                    <input style=" font-family: 'Aclonica';" type="text" id="userName" name="userName" placeholder="choose your user name"></input>
                 </div>
                 <div>
-                    <input type="text" id="name" name="name" placeholder="full name"></input>
+                    <input style=" font-family: 'Aclonica';" type="text" id="name" name="name" placeholder="full name"></input>
                 </div>
                 <div>
-                    <input type="email" id="email" name="email" placeholder="email address"></input>
+                    <input style=" font-family: 'Aclonica';" type="email" id="email" name="email" placeholder="email address"></input>
                 </div>
                 <div>
-                    <input type="password" id="password" name="password"
-                           placeholder="password...  longer then 8"></input>
+                    <input style=" font-family: 'Aclonica';" type="password" id="password" name="password"
+                           placeholder="password...  longer then 6"></input>
                 </div>
 
                 <div>
-                    <input type="date" id="form_birth_date" name="trip-start" required="" placeholder="date of birth">
+                    <input style=" font-family: 'Aclonica';" type="date" id="form_birth_date" name="trip-start" required="" placeholder="date of birth">
                 </div>
-                <input type="submit" value="Register">
+                <input style=" font-family: 'Aclonica';" type="submit" value="Register">
             </form>
         </div>
     </div>
