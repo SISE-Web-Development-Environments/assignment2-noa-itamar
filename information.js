@@ -178,8 +178,8 @@ function gameSettingsCheck() {
         rightkey = 39;
 
         numofballs = 90;
-        gametime = 80;
-        monsercounter = 1;
+        gametime = 90;
+        monsercounter = 2;
         smallcolor = getRandomColor();
         mediumcolor =getRandomColor();
         bigcolor = getRandomColor();
