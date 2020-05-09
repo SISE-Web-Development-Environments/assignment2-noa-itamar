@@ -451,7 +451,7 @@ function UpdatePosition() {
             ongoingmusic.pause();
             window.clearInterval(interval);
             window.clearInterval(intervalM);
-            window.alert("Winner!!! you have" + score + "points");
+            window.alert("Winner!!! you have " + score + " points");
             endgame=true;
         }
     }
