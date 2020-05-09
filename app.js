@@ -160,6 +160,12 @@ function Start() {
     var cell2 = findRandomEmptyCell(board);
     board[cell2[0]][cell2[1]] = 15;
     keysDown = {};
+    addEventListener("keydown",function (e) {
+        if([32,37,39].indexOf(e.keyCode) > -1){
+            e.preventDefault();
+        }
+
+    },false);
     addEventListener(
         "keydown",
         function (e) {

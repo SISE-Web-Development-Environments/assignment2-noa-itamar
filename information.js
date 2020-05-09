@@ -221,6 +221,10 @@ function switchdivs(newdiv) {
     var oldframe3 = document.getElementById("gameSettings");
     var oldframe4 = document.getElementById("PacmanGame");
     var oldframe5 = document.getElementById("registerpage");
+    var oldframe6 = document.getElementById("custom-padding");
+    if(ongoingmusic!=undefined && !ongoingmusic.paused && newdiv !='PacmanGame'){
+        ongoingmusic.pause();
+    }
     if (newdiv == "WelcomePage") {
         mainFrameTwo.style.display = 'block';
         oldframe3.style.display = 'none';
@@ -241,6 +245,7 @@ function switchdivs(newdiv) {
         oldframe4.style.display = 'none';
         oldframe5.style.display = 'none';
         oldframe2.style.display = 'none';
+
     }
     if (newdiv == "PacmanGame") {
         mainFrameTwo.style.display = 'block';
